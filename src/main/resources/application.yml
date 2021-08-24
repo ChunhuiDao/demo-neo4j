@@ -1,0 +1,25 @@
+server:
+  port: 8011
+spring:
+  # spring-data-neo4j数据库连接配置，社区版默认有两个数据库，为“default”和“neo4j”，默认使用“neo4j”库，如有需求，可自行创建。
+  neo4j:
+#    uri: bolt://localhost:7687
+    uri: neo4j+s://657d0f67.databases.neo4j.io
+    authentication:
+#      username: dch
+#      password: 302991dch
+      username: neo4j
+      password: aS6_AUtwTAlRgSStS1iup8NtL83MfJR7-P_pJB0oz3E
+  # mysql配置
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:mysql://localhost:3306/dch?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          neo4j: DEBUG
