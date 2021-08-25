@@ -56,10 +56,6 @@ class DemoNeo4jApplicationTests {
 //        System.out.println("companyNode = " + companyNode.toString());
 //        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
 //        String cql = "match (n:CompanyNode) with n limit 3 return collect(n)";
-        String cql = "match (n:CompanyNode) with n limit 3 return n";
-
-        Result result = Neo4jCustomizeCqlExecutor.executeCql(cql);
-        System.out.println(JSON.toJSONString(result));
     }
 
     /**
