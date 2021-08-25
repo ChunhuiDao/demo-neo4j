@@ -1,13 +1,19 @@
 package com.konkera.demoneo4j.repository;
 
+import com.konkera.demoneo4j.config.Neo4jCustomizeCqlExecutor;
 import com.konkera.demoneo4j.node.CompanyNode;
+import com.konkera.demoneo4j.utils.BeanLocator;
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.internal.SessionFactory;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-
-import static com.konkera.demoneo4j.relation.RelationConstant.RELATION_COMPANY_DEPARTMENT;
 
 /**
  * @author konkera
@@ -47,11 +53,16 @@ public interface CompanyRepository extends Neo4jRepository<CompanyNode, Long> {
      * @param companyId     主节点id
      * @param departmentIds 下级节点id集合
      */
-    @Query("match (c:CompanyNode),(d:DepartmentNode) where id(c)=$companyId and id(d) in $1 merge (c)-[:`" + RELATION_COMPANY_DEPARTMENT + "`]->(d)")
-    void linkDepartments(@Param("companyId") Long companyId, List<Long> departmentIds);
+//    @Query("match (c:CompanyNode),(d:DepartmentNode) where id(c)=$companyId and id(d) in $1 merge (c)-[r: :#{#relation}]->(d)")
+//    void linkDepartments(@Param("companyId") Long companyId, List<Long> departmentIds, @Param("relation") String relation);
+    default void linkDepartments(Long companyId, List<Long> departmentIds, String relation) {
+        String query = "match (c:CompanyNode),(d:DepartmentNode) where id(c)=" + companyId +
+                " and id(d) in " + departmentIds.toString() + " merge (c)-[:`"+ relation +"`]->(d)";
+        Neo4jCustomizeCqlExecutor.executeCql(query);
+    }
 
     /**
-     * 根据关系查询节点数据（包含下一级节点）
+     * 根据关系查询节点数据，返回的数据包含深度为1的数据
      *
      * @param relation 关系
      * @return
@@ -60,24 +71,24 @@ public interface CompanyRepository extends Neo4jRepository<CompanyNode, Long> {
     List<CompanyNode> findByRelation(String relation);
 
     /**
-     * 根据关系查询节点数据（包含节点整个关系网节点）
+     * 根据关系查询节点数据，返回的数据包含所有深度的数据
      *
      * @param relation 关系
      * @return
      */
-    @Query("match data=(c:CompanyNode)-[r]->(d)-[*0..]->(e) where type(r)=$0 with collect(data) as results return results")
+    @Query("match data=(c:CompanyNode)-[r*]->() where any(x in r where type(x) = $0) with collect(data) as results return results")
     List<CompanyNode> findAllByRelation(String relation);
 
     /**
-     * 查找特定关系且深度为3（包含节点整个关系网节点）
+     * 查找特定关系且指定深度，返回的数据包含指定深度的数据
      *
      * @param relation 关系
+     * @param level    深度
      * @return
      */
-//    @Query("match data=(c:CompanyNode)-[r]->(d)-[*$level..$level]->(e) where type(r)=$0 with collect(data) as results return results")
-//    List<CompanyNode> findByRelationAndLevel(String relation, Long level);
-    @Query("match data=(c:CompanyNode)-[r]->(d)-->(e) where type(r)=$0 with collect(data) as results return results")
-    List<CompanyNode> findByRelationAndLevel(String relation);
+    @Query("match data=(c:CompanyNode)-[r*]->() where length(data) > $1 and any(x in r where type(x) = $0) " +
+            "with collect(data) as results return results")
+    List<CompanyNode> findByRelationAndLevel(String relation, Long level);
 
     /**
      * 查询两节点间关系路径长度
@@ -86,4 +97,18 @@ public interface CompanyRepository extends Neo4jRepository<CompanyNode, Long> {
      */
     @Query("match data=(c:CompanyNode)-[r *]->() return length(data) as length order by length desc limit 1")
     Long findLength();
+
+    /**
+     * 分页查找
+     *
+     * @param skip     舍弃的条数
+     * @param pageSize 每页数量
+     * @return
+     */
+    @Query("match (n:CompanyNode)-[r*]->() with n order by id(n) skip $0 limit $1 return collect(n)")
+    List<CompanyNode> findPage(Long skip, Long pageSize);
+
+    //    @Query("match (n:CompanyNode) where n.companyName =~ replace('.*param.*', 'param', $0) return collect(n)")
+    @Query("match (n:CompanyNode) where n.companyName =~ replace('.*param.*', 'param', $0) return collect(n)")
+    List<CompanyNode> findLike(String name);
 }

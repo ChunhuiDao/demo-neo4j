@@ -1,5 +1,6 @@
 package com.konkera.demoneo4j.repository;
 
+import com.konkera.demoneo4j.node.CompanyNode;
 import com.konkera.demoneo4j.node.EmployeeNode;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
@@ -35,4 +36,5 @@ public interface EmployeeRepository extends Neo4jRepository<EmployeeNode, Long> 
      */
     @Query("match (e:EmployeeNode) return e order by $1 limit $0")
     List<EmployeeNode> findWithLimit(Long limit, String sorted);
+
 }

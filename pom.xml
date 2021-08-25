@@ -63,16 +63,16 @@
             <artifactId>spring-boot-starter-data-neo4j</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.neo4j</groupId>
-            <artifactId>neo4j-ogm-bolt-driver</artifactId>
-            <version>3.2.25</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.neo4j</groupId>-->
+<!--            <artifactId>neo4j</artifactId>-->
+<!--            <version>3.5.29</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+<!--            <version>1.18.20</version>-->
         </dependency>
 
         <dependency>

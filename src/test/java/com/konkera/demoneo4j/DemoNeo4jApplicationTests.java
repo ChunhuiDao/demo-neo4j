@@ -1,6 +1,7 @@
 package com.konkera.demoneo4j;
 
 import com.alibaba.fastjson.JSON;
+import com.konkera.demoneo4j.config.Neo4jCustomizeCqlExecutor;
 import com.konkera.demoneo4j.mapper.DchUserMapper;
 import com.konkera.demoneo4j.node.CompanyNode;
 import com.konkera.demoneo4j.node.DepartmentNode;
@@ -10,6 +11,9 @@ import com.konkera.demoneo4j.repository.DepartmentRepository;
 import com.konkera.demoneo4j.repository.EmployeeRepository;
 import lombok.val;
 import org.junit.jupiter.api.Test;
+import org.neo4j.driver.Result;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.internal.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
@@ -45,12 +49,17 @@ class DemoNeo4jApplicationTests {
 
     @Test
     void tempTest() {
-        CompanyNode companyNode = companyRepository.findFirstByCompanyName("1公司");
+//        CompanyNode companyNode = companyRepository.findFirstByCompanyName("1公司");
 //        System.out.println("companyNode = " + JSON.toJSONString(companyNode));
 
         // 内存泄漏重现
 //        System.out.println("companyNode = " + companyNode.toString());
 //        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
+//        String cql = "match (n:CompanyNode) with n limit 3 return collect(n)";
+        String cql = "match (n:CompanyNode) with n limit 3 return n";
+
+        Result result = Neo4jCustomizeCqlExecutor.executeCql(cql);
+        System.out.println(JSON.toJSONString(result));
     }
 
     /**
@@ -197,7 +206,7 @@ class DemoNeo4jApplicationTests {
         List<Long> departmentNodeIds = departmentNodes.stream().map(DepartmentNode::getId).collect(Collectors.toList());
 
         // merge语句创建关系
-        companyRepository.linkDepartments(companyNode.getId(), departmentNodeIds);
+        companyRepository.linkDepartments(companyNode.getId(), departmentNodeIds, "RELATION_COMPANY_DEPARTMENT");
     }
 
     /**
@@ -298,7 +307,7 @@ class DemoNeo4jApplicationTests {
      */
     @Test
     void findByRelationAndLevel() {
-        val companyNodes = companyRepository.findByRelationAndLevel(RELATION_COMPANY_DEPARTMENT);
+        val companyNodes = companyRepository.findByRelationAndLevel(RELATION_COMPANY_DEPARTMENT, 1L);
         System.out.println("companyNodes = " + JSON.toJSONString(companyNodes));
     }
 
@@ -320,6 +329,41 @@ class DemoNeo4jApplicationTests {
     void findLength() {
         val length = companyRepository.findLength();
         System.out.println("length = " + length);
+    }
+
+    /**
+     * 分页查询
+     */
+    @Test
+    void findPage() {
+        val companyNodes = companyRepository.findPage(1L, 5L);
+        System.out.println("companyNodes = " + JSON.toJSONString(companyNodes));
+    }
+
+    /**
+     * 复杂关系
+     */
+    @Test
+    void mixRelation() {
+
+    }
+
+    /**
+     * 模糊查询
+     */
+    @Test
+    void findLike() {
+        val companyNodes = companyRepository.findLike("公司");
+        System.out.println("companyNodes = " + JSON.toJSONString(companyNodes));
+    }
+
+    /**
+     * collect接收返回值和非collect接收
+     * collect接收会聚合去重
+     */
+    @Test
+    void findCollect() {
+
     }
 
 }
