@@ -9,4 +9,5 @@ package com.konkera.demoneo4j.relation;
 public interface RelationConstant {
     String RELATION_COMPANY_DEPARTMENT = "公司部门";
     String RELATION_DEPARTMENT_MEMBER = "部门成员";
+    String RELATION_MIX = "复杂关系";
 }

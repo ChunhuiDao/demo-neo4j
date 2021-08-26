@@ -1,5 +1,6 @@
 package com.konkera.demoneo4j.node;
 
+import com.konkera.demoneo4j.relation.MixRelation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.konkera.demoneo4j.relation.RelationConstant.RELATION_COMPANY_DEPARTMENT;
-import static com.konkera.demoneo4j.relation.RelationConstant.RELATION_DEPARTMENT_MEMBER;
+import static com.konkera.demoneo4j.relation.RelationConstant.*;
 
 /**
  * "部门"标签对象

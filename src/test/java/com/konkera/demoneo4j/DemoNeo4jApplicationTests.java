@@ -1,19 +1,15 @@
 package com.konkera.demoneo4j;
 
 import com.alibaba.fastjson.JSON;
-import com.konkera.demoneo4j.config.Neo4jCustomizeCqlExecutor;
 import com.konkera.demoneo4j.mapper.DchUserMapper;
-import com.konkera.demoneo4j.node.CompanyNode;
-import com.konkera.demoneo4j.node.DepartmentNode;
-import com.konkera.demoneo4j.node.EmployeeNode;
+import com.konkera.demoneo4j.node.*;
+import com.konkera.demoneo4j.relation.MixRelation;
 import com.konkera.demoneo4j.repository.CompanyRepository;
 import com.konkera.demoneo4j.repository.DepartmentRepository;
 import com.konkera.demoneo4j.repository.EmployeeRepository;
+import com.konkera.demoneo4j.repository.MixNodeSonRepository;
 import lombok.val;
 import org.junit.jupiter.api.Test;
-import org.neo4j.driver.Result;
-import org.neo4j.driver.Session;
-import org.neo4j.driver.internal.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Example;
@@ -38,6 +34,8 @@ class DemoNeo4jApplicationTests {
     private DepartmentRepository departmentRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private MixNodeSonRepository mixNodeSonRepository;
 
     /**
      * 测试与 MySQL 数据库连接共存
@@ -56,6 +54,7 @@ class DemoNeo4jApplicationTests {
 //        System.out.println("companyNode = " + companyNode.toString());
 //        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
 //        String cql = "match (n:CompanyNode) with n limit 3 return collect(n)";
+
     }
 
     /**
@@ -201,7 +200,7 @@ class DemoNeo4jApplicationTests {
         if (departmentNodes == null || departmentNodes.isEmpty()) return;
         List<Long> departmentNodeIds = departmentNodes.stream().map(DepartmentNode::getId).collect(Collectors.toList());
 
-        // merge语句创建关系
+        // merge语句创建 “简单关系”
         companyRepository.linkDepartments(companyNode.getId(), departmentNodeIds, "RELATION_COMPANY_DEPARTMENT");
     }
 
@@ -288,6 +287,7 @@ class DemoNeo4jApplicationTests {
 
     /**
      * 根据关系查找
+     * collect接收返回值和非collect接收：collect接收会聚合去重
      */
     @Test
     void findByRelation() {
@@ -341,7 +341,32 @@ class DemoNeo4jApplicationTests {
      */
     @Test
     void mixRelation() {
+        MixNodeSon mixNodeSon = new MixNodeSon();
+        mixNodeSon.setMixName("MixNodeSon");
 
+        {
+            MixNodeFather mixNodeFather1 = new MixNodeFather();
+            mixNodeFather1.setMixName("mixNodeFather1");
+
+            MixRelation mixRelation1 = new MixRelation();
+            mixRelation1.setDesc("mixRelation desc");
+            mixRelation1.setMixNodeFather(mixNodeFather1);
+
+            mixNodeSon.getMixNodeFathers().add(mixRelation1);
+        }
+
+        {
+            MixNodeFather mixNodeFather2 = new MixNodeFather();
+            mixNodeFather2.setMixName("mixNodeFather2");
+
+            MixRelation mixRelation2 = new MixRelation();
+            mixRelation2.setDesc("mixRelation desc2");
+            mixRelation2.setMixNodeFather(mixNodeFather2);
+
+            mixNodeSon.getMixNodeFathers().add(mixRelation2);
+        }
+
+        mixNodeSonRepository.save(mixNodeSon);
     }
 
     /**
@@ -351,15 +376,6 @@ class DemoNeo4jApplicationTests {
     void findLike() {
         val companyNodes = companyRepository.findLike("公司");
         System.out.println("companyNodes = " + JSON.toJSONString(companyNodes));
-    }
-
-    /**
-     * collect接收返回值和非collect接收
-     * collect接收会聚合去重
-     */
-    @Test
-    void findCollect() {
-
     }
 
 }

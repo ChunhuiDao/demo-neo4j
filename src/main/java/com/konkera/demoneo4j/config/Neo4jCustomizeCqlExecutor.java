@@ -2,8 +2,10 @@ package com.konkera.demoneo4j.config;
 
 import com.konkera.demoneo4j.utils.BeanLocator;
 import lombok.extern.slf4j.Slf4j;
-import org.neo4j.driver.*;
-import org.neo4j.driver.internal.InternalResult;
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
+import org.neo4j.driver.Session;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

@@ -2,16 +2,8 @@ package com.konkera.demoneo4j.repository;
 
 import com.konkera.demoneo4j.config.Neo4jCustomizeCqlExecutor;
 import com.konkera.demoneo4j.node.CompanyNode;
-import com.konkera.demoneo4j.utils.BeanLocator;
-import org.neo4j.driver.AuthTokens;
-import org.neo4j.driver.Driver;
-import org.neo4j.driver.GraphDatabase;
-import org.neo4j.driver.Session;
-import org.neo4j.driver.internal.SessionFactory;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -53,7 +45,7 @@ public interface CompanyRepository extends Neo4jRepository<CompanyNode, Long> {
      * @param companyId     主节点id
      * @param departmentIds 下级节点id集合
      */
-//    @Query("match (c:CompanyNode),(d:DepartmentNode) where id(c)=$companyId and id(d) in $1 merge (c)-[r: :#{#relation}]->(d)")
+//    @Query("match (c:CompanyNode),(d:DepartmentNode) where id(c)=$companyId and id(d) in $1 merge (c)-[r:`$2`]->(d)")
 //    void linkDepartments(@Param("companyId") Long companyId, List<Long> departmentIds, @Param("relation") String relation);
     default void linkDepartments(Long companyId, List<Long> departmentIds, String relation) {
         String query = "match (c:CompanyNode),(d:DepartmentNode) where id(c)=" + companyId +
