@@ -15,7 +15,7 @@ import java.util.List;
 import static com.konkera.demoneo4j.relation.RelationConstant.RELATION_MIX;
 
 /**
- * 复杂关系
+ * 复杂关系（关系对象）
  *
  * @author konkera
  * @date 2021/8/26

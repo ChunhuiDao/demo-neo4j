@@ -1,5 +1,7 @@
 package com.konkera.demoneo4j.node;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.konkera.demoneo4j.relation.MixRelation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +26,7 @@ import static com.konkera.demoneo4j.relation.RelationConstant.*;
 @Getter
 @Setter
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class) // Jackson解决序列化循环依赖
 @Node("DepartmentNode")
 public class DepartmentNode {
     @Id
@@ -52,4 +55,20 @@ public class DepartmentNode {
 
     @Relationship(type = RELATION_DEPARTMENT_MEMBER, direction = Relationship.Direction.OUTGOING)
     private List<EmployeeNode> subEmployeeNodes;
+
+    // 存在内存泄漏问题
+//    @Override
+//    public String toString() {
+//        return "DepartmentNode{" +
+//                "id=" + id +
+//                ", departmentName='" + departmentName + '\'' +
+//                ", createdBy='" + createdBy + '\'' +
+//                ", created=" + created +
+//                ", updatedBy='" + updatedBy + '\'' +
+//                ", updated=" + updated +
+//                ", version=" + version +
+//                ", supCompanyNodes=" + supCompanyNodes +
+//                ", subEmployeeNodes=" + subEmployeeNodes +
+//                '}';
+//    }
 }

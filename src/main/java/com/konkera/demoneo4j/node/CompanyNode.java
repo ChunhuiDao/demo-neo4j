@@ -1,9 +1,10 @@
 package com.konkera.demoneo4j.node;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.springframework.data.annotation.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -16,15 +17,15 @@ import java.util.List;
 import static com.konkera.demoneo4j.relation.RelationConstant.RELATION_COMPANY_DEPARTMENT;
 
 /**
- * “公司”标签对象
+ * “公司”标签对象(节点对象)
  *
  * @author konkera
  * @date 2021/8/18
  */
 @Getter
 @Setter
-//@ToString
 @NoArgsConstructor
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class) // Jackson解决序列化循环依赖
 @Node("CompanyNode") // 与数据库中节点标签名一致
 public class CompanyNode {
     /**
@@ -75,10 +76,26 @@ public class CompanyNode {
 
     /**
      * 关系
-     * type：关系标签名
+     * type：关系类型名
      * direction：关系指向，这里 Relationship.Direction.INCOMING 代表subDepartments成员指向自己，
      * Relationship.Direction.OUTGOING 代表自己指向subDepartments成员
      */
     @Relationship(type = RELATION_COMPANY_DEPARTMENT, direction = Relationship.Direction.OUTGOING)
     private List<DepartmentNode> subDepartments;
+
+    // 存在内存泄漏问题
+//    @Override
+//    public String toString() {
+//        return "CompanyNode{" +
+//                "id=" + id +
+//                ", companyName='" + companyName + '\'' +
+//                ", address='" + address + '\'' +
+//                ", createdBy='" + createdBy + '\'' +
+//                ", created=" + created +
+//                ", updatedBy='" + updatedBy + '\'' +
+//                ", updated=" + updated +
+//                ", version=" + version +
+//                ", subDepartments=" + subDepartments +
+//                '}';
+//    }
 }

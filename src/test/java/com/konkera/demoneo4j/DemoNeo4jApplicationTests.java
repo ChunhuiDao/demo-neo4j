@@ -8,6 +8,7 @@ import com.konkera.demoneo4j.repository.CompanyRepository;
 import com.konkera.demoneo4j.repository.DepartmentRepository;
 import com.konkera.demoneo4j.repository.EmployeeRepository;
 import com.konkera.demoneo4j.repository.MixNodeSonRepository;
+import com.konkera.demoneo4j.utils.JsonUtil;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,13 +48,12 @@ class DemoNeo4jApplicationTests {
 
     @Test
     void tempTest() {
-//        CompanyNode companyNode = companyRepository.findFirstByCompanyName("1公司");
-//        System.out.println("companyNode = " + JSON.toJSONString(companyNode));
+        CompanyNode companyNode = companyRepository.findFirstByCompanyName("1公司");
+        System.out.println("companyNode = " + JSON.toJSONString(companyNode));
 
         // 内存泄漏重现
 //        System.out.println("companyNode = " + companyNode.toString());
-//        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
-//        String cql = "match (n:CompanyNode) with n limit 3 return collect(n)";
+        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
 
     }
 

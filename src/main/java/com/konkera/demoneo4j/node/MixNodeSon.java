@@ -32,6 +32,6 @@ public class MixNodeSon {
     @Relationship(type = RELATION_MIX, direction = Relationship.Direction.INCOMING)
     private List<MixRelation> mixNodeFathers = new ArrayList<>();
 
-    @Relationship(type = RELATION_MIX, direction = Relationship.Direction.INCOMING)
-    private List<MixNodeFather> fathers = new ArrayList<>();
+//    @Relationship(type = RELATION_MIX, direction = Relationship.Direction.INCOMING)
+//    private List<MixNodeFather> fathers = new ArrayList<>();
 }
