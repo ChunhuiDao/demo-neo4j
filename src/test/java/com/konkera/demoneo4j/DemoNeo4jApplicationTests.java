@@ -1,7 +1,9 @@
 package com.konkera.demoneo4j;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.konkera.demoneo4j.mapper.DchUserMapper;
+import com.konkera.demoneo4j.model.DchUser;
 import com.konkera.demoneo4j.node.*;
 import com.konkera.demoneo4j.relation.MixRelation;
 import com.konkera.demoneo4j.repository.CompanyRepository;
@@ -44,16 +46,20 @@ class DemoNeo4jApplicationTests {
     @Test
     void testWithMysql() {
         System.out.println(userMapper.selectById(1L));
+
+        DchUser user = new DchUser();
+        user.setId(1L);
+        System.out.println(user.selectById());
     }
 
     @Test
     void tempTest() {
-        CompanyNode companyNode = companyRepository.findFirstByCompanyName("1公司");
-        System.out.println("companyNode = " + JSON.toJSONString(companyNode));
+        CompanyNode companyNode = companyRepository.findFirstByCompanyName("3公司");
+//        System.out.println("companyNode = " + JSON.toJSONString(companyNode));
 
         // 内存泄漏重现
-//        System.out.println("companyNode = " + companyNode.toString());
-        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
+        System.out.println("companyNode = " + companyNode.toString());
+//        System.out.println("companyNode = " + JsonUtil.toJsonString(companyNode));
 
     }
 
@@ -233,10 +239,10 @@ class DemoNeo4jApplicationTests {
     @Test
     void testFindSingleNode() {
         // 关键字方法查询
-        CompanyNode companyNode1 = companyRepository.findFirstByCompanyName("1公司");
+        CompanyNode companyNode1 = companyRepository.findFirstByCompanyName("2公司");
         System.out.println("companyNode1 = " + JSON.toJSONString(companyNode1));
         // 手动定义查询
-        CompanyNode companyNode2 = companyRepository.getById(0L);
+        CompanyNode companyNode2 = companyRepository.findById(57L).get();
         System.out.println("companyNode2 = " + JSON.toJSONString(companyNode2));
     }
 

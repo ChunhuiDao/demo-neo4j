@@ -2,8 +2,16 @@ package com.konkera.demoneo4j.repository;
 
 import com.konkera.demoneo4j.config.Neo4jCustomizeCqlExecutor;
 import com.konkera.demoneo4j.node.CompanyNode;
+import com.konkera.demoneo4j.utils.BeanLocator;
+import org.neo4j.driver.AuthTokens;
+import org.neo4j.driver.Driver;
+import org.neo4j.driver.GraphDatabase;
+import org.neo4j.driver.Session;
+import org.neo4j.driver.internal.SessionFactory;
+import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

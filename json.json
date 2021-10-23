@@ -2,143 +2,49 @@
   {
     "address": "1云南省昆明市环城南路xxx号",
     "companyName": "1公司",
-    "created": "2021-08-23T11:26:24",
+    "created": "2021-09-03T16:50:20.745",
     "createdBy": "1管理员a",
-    "id": 0,
-    "subDepartments": [
-      {
-        "created": "2021-08-23T14:16:23.810",
-        "createdBy": "管理员a",
-        "departmentName": "1公司运营部门",
-        "id": 4,
-        "subEmployeeNodes": [
-          {
-            "created": "2021-08-23T14:16:24.614",
-            "createdBy": "管理员a",
-            "employeeName": "1运营员工A",
-            "id": 10,
-            "supDepartments": [
-              {
-                "$ref": "$[0].subDepartments[0]"
-              },
-              {
-                "created": "2021-08-23T14:16:23.810",
-                "createdBy": "管理员a",
-                "departmentName": "2公司运营部门",
-                "id": 6,
-                "subEmployeeNodes": [
-                  {
-                    "$ref": "$[0].subDepartments[0].subEmployeeNodes[0]"
-                  }
-                ],
-                "supCompanyNodes": [
-                  {
-                    "address": "2云南省昆明市环城南路xxx号",
-                    "companyName": "2公司",
-                    "created": "2021-08-23T11:26:24.394",
-                    "createdBy": "2管理员a",
-                    "id": 1,
-                    "subDepartments": [
-                      {
-                        "$ref": "$[0].subDepartments[0].subEmployeeNodes[0].supDepartments[1]"
-                      },
-                      {
-                        "created": "2021-08-23T14:16:23.810",
-                        "createdBy": "管理员a",
-                        "departmentName": "2公司财务部门",
-                        "id": 7,
-                        "subEmployeeNodes": [],
-                        "supCompanyNodes": [
-                          {
-                            "$ref": "$[0].subDepartments[0].subEmployeeNodes[0].supDepartments[1].supCompanyNodes[0]"
-                          }
-                        ],
-                        "updated": "2021-08-23T14:16:23.810",
-                        "updatedBy": "管理员a",
-                        "version": 0
-                      }
-                    ],
-                    "updated": "2021-08-23T11:26:24.394",
-                    "updatedBy": "2管理员a",
-                    "version": 0
-                  }
-                ],
-                "updated": "2021-08-23T14:16:23.810",
-                "updatedBy": "管理员a",
-                "version": 0
-              }
-            ],
-            "updated": "2021-08-23T14:16:24.614",
-            "updatedBy": "管理员a",
-            "version": 0
-          }
-        ],
-        "supCompanyNodes": [
-          {
-            "$ref": "$[0]"
-          }
-        ],
-        "updated": "2021-08-23T14:16:23.810",
-        "updatedBy": "管理员a",
-        "version": 0
-      },
-      {
-        "created": "2021-08-23T14:16:23.810",
-        "createdBy": "管理员a",
-        "departmentName": "1公司财务部门",
-        "id": 5,
-        "subEmployeeNodes": [],
-        "supCompanyNodes": [
-          {
-            "$ref": "$[0]"
-          }
-        ],
-        "updated": "2021-08-23T14:16:23.810",
-        "updatedBy": "管理员a",
-        "version": 0
-      }
-    ],
-    "updated": "2021-08-23T11:26:24",
+    "id": 56,
+    "subDepartments": [],
+    "updated": "2021-09-03T16:50:20.745",
     "updatedBy": "1管理员a",
     "version": 0
   },
   {
-    "$ref": "$[0].subDepartments[0].subEmployeeNodes[0].supDepartments[1].supCompanyNodes[0]"
+    "address": "2云南省昆明市环城南路xxx号",
+    "companyName": "2公司",
+    "created": "2021-09-03T16:50:20.970",
+    "createdBy": "2管理员a",
+    "id": 57,
+    "subDepartments": [],
+    "updated": "2021-09-03T16:50:20.970",
+    "updatedBy": "2管理员a",
+    "version": 0
   },
   {
     "address": "3云南省昆明市环城南路xxx号",
     "companyName": "3公司",
-    "created": "2021-08-23T11:32:54.272",
+    "created": "2021-09-03T16:50:20.997",
     "createdBy": "3管理员a",
-    "id": 2,
+    "id": 58,
     "subDepartments": [
       {
-        "created": "2021-08-23T11:32:54.281",
+        "created": "2021-09-03T16:50:21.008",
         "createdBy": "管理员a",
         "departmentName": "3公司运营部门",
-        "id": 3,
+        "id": 59,
         "subEmployeeNodes": [],
         "supCompanyNodes": [
           {
             "$ref": "$[2]"
           }
         ],
-        "updated": "2021-08-23T11:32:54.281",
+        "updated": "2021-09-03T16:50:21.008",
         "updatedBy": "管理员a",
         "version": 0
-      },
-      {
-        "departmentName": "3公司财务部门",
-        "id": 31,
-        "subEmployeeNodes": [],
-        "supCompanyNodes": [
-          {
-            "$ref": "$[2]"
-          }
-        ]
       }
     ],
-    "updated": "2021-08-23T11:32:54.272",
+    "updated": "2021-09-03T16:50:20.997",
     "updatedBy": "3管理员a",
     "version": 0
   }

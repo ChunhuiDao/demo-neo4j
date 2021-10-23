@@ -10,6 +10,10 @@ spring:
       password: 302991dch
 #      username: neo4j
 #      password: aS6_AUtwTAlRgSStS1iup8NtL83MfJR7-P_pJB0oz3E
+  # 必需配置在neo4j之后，否则连接数据库报错
+#  data:
+#    neo4j:
+#      database: konkera
   # mysql配置
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

@@ -84,18 +84,18 @@ public class CompanyNode {
     private List<DepartmentNode> subDepartments;
 
     // 存在内存泄漏问题
-//    @Override
-//    public String toString() {
-//        return "CompanyNode{" +
-//                "id=" + id +
-//                ", companyName='" + companyName + '\'' +
-//                ", address='" + address + '\'' +
-//                ", createdBy='" + createdBy + '\'' +
-//                ", created=" + created +
-//                ", updatedBy='" + updatedBy + '\'' +
-//                ", updated=" + updated +
-//                ", version=" + version +
-//                ", subDepartments=" + subDepartments +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "CompanyNode{" +
+                "id=" + id +
+                ", companyName='" + companyName + '\'' +
+                ", address='" + address + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", created=" + created +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updated=" + updated +
+                ", version=" + version +
+                ", subDepartments=" + subDepartments +
+                '}';
+    }
 }

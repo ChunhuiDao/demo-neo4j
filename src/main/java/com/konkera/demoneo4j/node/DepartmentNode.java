@@ -57,18 +57,18 @@ public class DepartmentNode {
     private List<EmployeeNode> subEmployeeNodes;
 
     // 存在内存泄漏问题
-//    @Override
-//    public String toString() {
-//        return "DepartmentNode{" +
-//                "id=" + id +
-//                ", departmentName='" + departmentName + '\'' +
-//                ", createdBy='" + createdBy + '\'' +
-//                ", created=" + created +
-//                ", updatedBy='" + updatedBy + '\'' +
-//                ", updated=" + updated +
-//                ", version=" + version +
-//                ", supCompanyNodes=" + supCompanyNodes +
-//                ", subEmployeeNodes=" + subEmployeeNodes +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "DepartmentNode{" +
+                "id=" + id +
+                ", departmentName='" + departmentName + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", created=" + created +
+                ", updatedBy='" + updatedBy + '\'' +
+                ", updated=" + updated +
+                ", version=" + version +
+                ", supCompanyNodes=" + supCompanyNodes +
+                ", subEmployeeNodes=" + subEmployeeNodes +
+                '}';
+    }
 }
